@@ -6,41 +6,11 @@ import {
   ScrollView,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 
-import styles from './style';
+import styles from '@/styles/home';
 import Mapa from '@/components/Mapa';
-
-type Corrida = {
-  id: string;
-  destino: string;
-  endereco: string;
-  data: string;
-  preco: string;
-};
-
-const historico: Corrida[] = [
-  {
-    id: '1',
-    destino: 'Aeroporto de Congonhas',
-    endereco: 'Av. Washington Luís, s/n',
-    data: 'Ontem, 18:42',
-    preco: 'R$ 38,90',
-  },
-  {
-    id: '2',
-    destino: 'Shopping Ibirapuera',
-    endereco: 'Av. Ibirapuera, 3103',
-    data: '15 de agosto, 20:10',
-    preco: 'R$ 22,50',
-  },
-  {
-    id: '3',
-    destino: 'Casa',
-    endereco: 'Rua das Palmeiras, 120',
-    data: '12 de agosto, 08:15',
-    preco: 'R$ 15,00',
-  },
-];
+import { historico } from '@/data/locais';
 
 export default function HomeScreen() {
   return (
@@ -52,7 +22,11 @@ export default function HomeScreen() {
           <Text style={styles.logo}>Uber</Text>
         </View>
 
-        <TouchableOpacity style={styles.searchBar} activeOpacity={0.8}>
+        <TouchableOpacity
+          style={styles.searchBar}
+          activeOpacity={0.8}
+          onPress={() => router.push('/destino')}
+        >
           <View style={styles.searchDot} />
           <Text style={styles.searchPlaceholder}>Para onde?</Text>
         </TouchableOpacity>
@@ -67,10 +41,12 @@ export default function HomeScreen() {
               </View>
 
               <View style={styles.rideInfo}>
-                <Text style={styles.rideDestination}>{corrida.destino}</Text>
-                <Text style={styles.rideAddress}>{corrida.endereco}</Text>
+                <Text style={styles.rideDestination}>{corrida.local.nome}</Text>
+                <Text style={styles.rideAddress}>{corrida.local.endereco}</Text>
                 <Text style={styles.rideDate}>{corrida.data}</Text>
               </View>
+
+              <Text style={styles.ridePrice}>{corrida.preco}</Text>
 
             </TouchableOpacity>
           ))}
